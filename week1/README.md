@@ -417,3 +417,7 @@ What is my attack surface?
 - why we need privileged programs
 - how set-uid programs work
 - how can privileged program go wrong
+
+# Week 1 Live Session
+
+## Malicious Software

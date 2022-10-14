@@ -520,6 +520,8 @@ void func(char *str){
 Is this safe?
 No because the secret pointer is vulnerable to being changed to the location of the guard.
 
+**Guard is implemented in compiler**
+
 
 ## 2.11 Summary
 ([top](#directory))

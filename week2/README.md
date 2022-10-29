@@ -3,7 +3,7 @@
 - [Home](/README.md#table-of-contents)
 - [Week 1 Set-UID Programs](/week1/README.md#Week-1-set-uid-programs)
 - **&rarr;[Week 2 Buffer-Overflow Attacks and Countermeasures](/week2/README.md#Week-2-buffer-overflow-attacks-and-countermeasures)**
-- [Week 3](/week3/README.md#Week-3-race-condition-attacks-and-dirty-cow)
+- [Week 3 Race Condition Attacks and "Dirty Cow"](/week3/README.md#Week-3-race-condition-attacks-and-dirty-cow)
 
 ## 2.2 Buffer-Overflow Attacks and Countermeasures
 ([top](#directory))
@@ -529,3 +529,6 @@ No because the secret pointer is vulnerable to being changed to the location of 
 - buffer overflow
 - how to exploit buffer-overflow vulnerabilities
 - countermeasures
+
+
+# Week 2 Live Session

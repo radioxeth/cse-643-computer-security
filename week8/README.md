@@ -192,3 +192,63 @@ $ cp MaliciousCode.smali RepackagingLab/smali/com/
   </application>
 </manifest>
 ```
+
+## 8.6 Repackaging
+([top](#directory))
+
+
+### Repackage the Appp
+
+#### Compile smali code to dex code, and package the app
+
+```
+$ apktool b RepackagingLab
+```
+
+#### The location of the new APK file
+
+```
+$ ls -l RepackagingLab/dist/
+```
+
+### Signing APK File
+
+self-sign, not secure
+
+### Sign the APK File: Commands
+
+#### Step 1: Generate the signing key
+
+```
+$ keytool -alias mykey -genkey -v -keystore mykey.keystore
+```
+
+#### Step 2: Sign the APK File
+
+```
+$ jarsigner -keystore mykey.keystore RepackagingLab.apk mykey
+```
+
+### Experiment Setup
+
+#### VMs
+- ubuntu
+- android
+
+#### Get Android's IP Address (inside android vm)
+```
+$ netcfg
+```
+
+#### Connect to Android VM from the Ubuntu VM
+```
+$ adb disconnect
+$ adb connect 10.0.2.19
+$ adb devices
+$ adb install -r RepackagingLab.apk
+```
+
+## 8.8 Summary
+- how repackaging attacks work
+- the repackaging process
+- reverse engineering

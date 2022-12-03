@@ -252,3 +252,212 @@ $ adb install -r RepackagingLab.apk
 - how repackaging attacks work
 - the repackaging process
 - reverse engineering
+
+
+## 8.9 Part 2: Android Rooting Attack
+([top](#directory))
+
+## 8.10 How to Root Android Devices
+([top](#directory))
+
+### How to Root Android Devices
+
+- gain root
+  - uid=0
+- Android: on Linux
+  - app1: uid=1
+  - app2: uid=2
+  - app3: uid=3
+***
+- rooting
+- malicious rooting
+
+***
+- Two approaches
+  - exploit vulnerability
+    - no setuid programs in android
+  - do it from outside &larr; this lecture
+
+## 8.11 Rooting Approaches
+([top](#directory))
+
+
+### Rooting From Inside
+Case Study: using the "Dirty COW" Exploit
+
+### Rooting From Outside
+
+- Approach 1
+  - change the entire OS
+  - not good
+- Approach 2
+  - OS update
+    - Download Update
+      - OTA (over the air) package
+      - (don't do live update because the OS will be vulnerable)
+    - Reboot to enter Recovery OS
+      - Modify Android OS using OTA
+    - Reboot to enter Android OS
+***
+- Idea: Create an OTA
+- Bad news: Signature prevents from creating unauthorized OTA
+- Solution: Replace recovery OS
+- Bad news: Locked Bootloader
+  - OS can't be replaced
+  - allow to unlock
+
+## 8.12 Rooting Real Devices
+([top](#directory))
+
+## 8.13 How OTA Works
+([top](#directory))
+
+### The OTA Structure
+
+- `OTA Package`
+  - `META-INF`
+    - `MANIFEST.MF`
+    - `CERT.RSA`
+    - `CERT.SF`
+    - `com/`
+      - `google/`
+        - `android/` (entry point)
+          - `update-binary` (modify OS to gain root privilege)
+          - `update-script` (modify OS to gain root privilege)
+  - `arm/`
+  - `x86/`
+  - `system/`
+  - `boot/`
+  - `.../`
+
+## 8.14 Constructing OTA Package
+([top](#directory))
+
+
+### Mount Points and OTA Script
+- `android/` directory in Recovery is mounted to Android `/`
+- code `/android`
+  - inect code to `/`
+
+### Build OTA Package
+
+#### Modify `update-binary`
+
+```
+cp dummy.sh /android/system/xbin
+chmod a+x /android/system/xbin/dummy.sh
+sed -i "/return 0/i/system/xbin/dummy.sh" /android/system/etc.init.sh
+```
+- trigger file by adding command `sed -i` during the boot process
+#### Build the OTA Package
+
+```
+$ zip -r task1.zip task1/
+```
+- give to recovery OS
+
+### Inject Code via app_process
+
+**Objective: Update Android OS - create a dummy file during the Android Runtime bootup**
+
+
+|boot process||
+|-|-|
+|Power on|linux process|
+|Boot ROM|linux process|
+|Bootloader|linux process|
+|Kernel|linux process|
+|Init|init.sh (linux process)|
+|---|---|
+|Zygote|starting of android|
+|System Servers||
+|Broadcast ACTION_BOOT_COMPLETED||
+|Boot completed||
+
+### Modified app_process
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+extern char ** environ;
+
+int main(int argc, char** argv){
+    //write the dummy file
+    FILE* f= fopen("/system/dummy2","w");
+    if(f==NULL){
+        printf("Permission denied\n");
+        exit(EXIT_FAILURE);
+    }
+    fclose(f);
+
+    // launch the original binary
+    char* cmd="/system/bin/app_process_original";
+    execve(cmd,argv,environ);
+    // execve() returns only if it fails
+    return EXIT_FAILURE;
+}
+```
+
+## 8.15 Get a Root Shell
+([top](#directory))
+
+**Objective: Update Android OS - enable users to get a *root shell***
+
+|boot process||
+|-|-|
+|Power on||
+|Boot ROM||
+|Bootloader||
+|Kernel||
+|Init||
+|`/bin/bash`|bad idea, can be interrupted|
+|`/bin/bash &`|run in background - no control though|
+|---|---|
+|Zygote|starting of android|
+|System Servers||
+|Broadcast ACTION_BOOT_COMPLETED||
+|Boot completed||
+
+`\bin\bash`
+
+- root daemon (want to use normal process input/output/stderr)
+    - 0 stdin
+    - 1 stdout
+    - 2 stderr
+
+- normal process
+    - 0
+    - 1
+    - 2
+
+<img src="rootshell.png"/>
+
+Send File Descriptor from Client to Child Process using unix domain socket
+
+### Code Details
+
+#### Give the cient access to the root shell process
+```C
+int client_in = recv_fd(socket);
+int client_out = recv_fd(socket);
+int client_err = recv_fd(socket);
+
+dup2(clinet_in, STDIN_FILENO); //1
+dup2(clinet_out, STDOUT_FILENO); //2
+dup2(clinet_err, STDERR_FILENO); //3
+
+//change the current directory
+chdir("/");
+//construct the essential environment variables
+char* env[] = {SHELL_ENV,PATH_ENV};
+
+char* shell[]={DEFAULT_SHELL, NULL};
+execve(shell[0],shell,env);
+```
+
+## 8.17 Summary
+([top](#directory))
+- How rooting works
+- How to use OTA to root Android devices

@@ -393,8 +393,8 @@ void main()
 ```
 ```
 $ sudo sysctl -w kernel.randomize_va_space=0 #turn off
-$ sudo sysctl -w kernel.randomize_va_space=0 #stack
-$ sudo sysctl -w kernel.randomize_va_space=0 #stack and heap
+$ sudo sysctl -w kernel.randomize_va_space=1 #stack
+$ sudo sysctl -w kernel.randomize_va_space=2 #stack and heap
 ```
 
 

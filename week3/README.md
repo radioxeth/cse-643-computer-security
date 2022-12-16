@@ -3,7 +3,7 @@
 - [Home](/README.md#table-of-contents)
 - [Week 2 Buffer-Overflow Attacks and Countermeasures](/week2/README.md#Week-2-buffer-overflow-attacks-and-countermeasures)
 - **&rarr;[Week 3 Race Condition Attacks and "Dirty Cow"](/week3/README.md#Week-3-race-condition-attacks-and-dirty-cow)**
-- [Week 4 Format String Attack and Shellshot Attack](/week4/README.md#week-4-format-string-attack-and-shellshock-attack)
+- [Week 4 Format String Attack and Shellshock Attack](/week4/README.md#week-4-format-string-attack-and-shellshock-attack)
 
 ## 3.2 Part 1: Race Condition Attack
 ([top](#top))

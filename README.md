@@ -1,4 +1,4 @@
-# CSE 644 Computer Security
+# CSE 643 Computer Security
 **cse-643-computer-security**
 
 ## Table of Contents

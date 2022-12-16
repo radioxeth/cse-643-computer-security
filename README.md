@@ -12,4 +12,4 @@
 - [Week 7 SQL Injection and Clickjacking](/week7/README.md#week-7-sql-injection-and-clickjacking)
 - [Week 8 Repackaging Attack and Rooting Attack](/week8/README.md#week-8-repackaging-attack-and-rooting-attack)
 - [Week 9 Access Control](/week9/README.md#week-9-access-control)
-- [Week 10 80x86 Protection Mode](/week10/README#week-10-80x86-protection-mode)
+- [Week 10 80x86 Protection Mode](/week10/README.md#week-10-80x86-protection-mode)
